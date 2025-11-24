@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="text-center mx-4">
+   
+        <h3> <i class="fa-solid fa-clock-rotate-left"></i> Prediction History</h3>
+        <table class="table table-success  table-hover">
+            <thead>
+                <tr class="table-active">
+                    <th scope="col">SrNo.</th>
+                    <th scope="col">Predicted Date</th>
+                    <th scope="col">N</th>
+                    <th scope="col">P</th>
+                    <th scope="col">K</th>
+                    <th scope="col">Temperature</th>
+                    <th scope="col">Humidity</th>
+                    <th scope="col">pH</th>
+                    <th scope="col">RainFall</th>
+                    <th scope="col">Recommended Crop</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for p in predictions %}
+                <tr>
+                    <th>{{forloop.counter}}</th>
+                    <td>{{p.created_at|date:"d M Y H:i"}}</td>
+                    <td>{{p.N}}</td>
+                    <td>{{p.P}}</td>
+                    <td>{{p.K}}</td>
+                    <td>{{p.temperature}}</td>
+                    <td>{{p.humidity}}</td>
+                    <td>{{p.ph}}</td>
+                    <td>{{p.rainfall}}</td>
+                    <td><span class="badge bg-success">{{p.predicted_label|title}}</span></td>
+                    <td><a href="{% url 'user_delete_pred' p.id %}" class="btn btn-outline-danger"
+                            onclick="return confirm('Delete this entry? This cannot be undone')"><i class="fa-solid fa-trash"></i></a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    
+
+</div>
+{% endblock %}

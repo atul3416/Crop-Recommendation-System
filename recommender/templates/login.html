@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+<!-- {% load static %} -->
+{% block title %} SignUp {% endblock %}
+
+{% block content %}
+<div class="row justify-content-center ">
+    <div class="col-lg-10 ">
+        <div class="card shadow-lg border-0 overflow-hidden rounded-4">
+            <div class="row">
+                <div class="col-md-6 position-relative" style="background: url('/static/images/img1.jpg') center/cover no-repeat ; ">
+                    <div class=" position-absolute start-0 top-0 w-100 h-100" style="background: linear-gradient(180deg,rgba(0,0,0,.35),rgba(0,0,0,.75));">
+
+                    </div>
+                    <div class="position-absolute bottom-0 p-4 text-white">
+                        <h4 class="fw-bold mb-2">Create Your Account </h4>
+                        <p class="mb-3 text-white-50"> Predict Crops, save history, export CSV - all in one dashboard</p>
+                        <ul class="small list-unstyled mb-0">
+                            <li class="mb-1"><i class="fa-solid fa-circle-check me-2"></i>Secure & Private</li>
+                            <li class="mb-1"><i class="fa-solid fa-circle-check me-2"></i>Fast ML predications</li>
+                            <li class="mb-1"><i class="fa-solid fa-circle-check me-2"></i>Modern responsive UI</li>
+                        </ul>
+                        
+                    </div>
+
+                </div>
+                <div class="col-md-6 bg-white">
+                    <div class="p-5 ">
+                        <h3 class="mb-3"><i class="fas fa-user-plus"></i> Create Account</h3>
+                        <!-- Form Start -->
+                        <form method="post" id="loginForm">
+                            {% csrf_token %}
+                            <div class="row g-3">
+                                
+                                <div class="col-md-12 ">
+                                    <label class="form-label">Email</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fa-solid fa-envelope"></i></span>
+                                        <input type="email" name="email" class="form-control"
+                                            placeholder="Enter Your Email" required/>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12 ">
+                                    <label class="form-label">Password <span class="text-muted small">(min 6
+                                            character)</span></label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fa-solid fa-key"></i></span>
+                                        <input type="password" name="password" id="pwd" class="form-control"
+                                            placeholder="***" required/>
+                                        <button class="btn btn-outline-secondary" type="button" id="togglePwd"
+                                            title="Show/Hide">
+                                            <i class="fa-regular fa-eye"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+                
+
+                            </div>
+                            <button class="btn btn-success mt-3 w-100 " type="submit" id="loginBtn">
+                                <span>Login </span>
+                            </button>
+                            <div class="text-center mt-3">
+                                <span class="text-muted small">New User?</span>
+                                <a href="{% url 'sign_up' %}" class="small text-decoration-none ms-1"><i class="fa-solid fa-right-to-bracket"></i> SignUp</a>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+{% endblock %}

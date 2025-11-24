@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+<!-- {% load static %} -->
+{% block title %} Change Password {% endblock %}
+
+{% block content %}
+<div class="row g-4">
+    <div class="col-lg-6">
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+                <h3 class="mb-3"><i class="fa-solid fa-key"></i> Change Password </h3>
+
+                <!-- Form Start -->
+                <form method="post" id="pwdForm">
+                    {% csrf_token %}
+
+                    <div class="mb-3">
+                        <label class="form-label">Current Password</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
+                            <input type="password" name="current_password" id="curpwd" class="form-control"
+                                placeholder="***" required />
+                            <button class="btn btn-outline-secondary" type="button" id="toggleCur" title="Show/Hide">
+                                <i class="fa-regular fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">New Password</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fa-solid fa-key"></i></span>
+                            <input type="password" name="new_password" id="newpwd" class="form-control"
+                                placeholder="***" required />
+                            <button class="btn btn-outline-secondary" type="button" id="toggleNew" title="Show/Hide">
+                                <i class="fa-regular fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Confirm New Password</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fa-solid fa-shield"></i></span>
+                            <input type="password" name="con_password" id="newpwd_c" class="form-control"
+                                placeholder="***" required />
+                            <button class="btn btn-outline-secondary" type="button" id="toggleNew_c" title="Show/Hide">
+                                <i class="fa-regular fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="mb-2 text-muted">
+                        <span>
+                            <i class="fa-solid fa-user"></i> {{request.user.username}}
+                        </span>
+                    </div>
+
+
+                    <button class="btn btn-success mt-3 w-100 " type="submit" id="savaBtn">
+                        <span><i class="fa-solid fa-rotate"></i>Update Password </span>
+                    </button>
+
+
+                </form>
+
+
+
+            </div>
+
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="card shadow-lg border-0 rounded-4">
+            <div class="card-body p-4">
+                <h5 class="mb-3"><i class="fa-solid fa-shield-halved"></i> Security Tips</h5>
+                <ul class="small text-muted mb-0">
+                    <li>Use a unique password you don't use elsewhere.</li>
+                    <li>Avoid names, birthdays, or common words.</li>
+                    <li>Don't reuse your current password.</li>
+                    <li>Consider a password manager for strong, unique passwords.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
