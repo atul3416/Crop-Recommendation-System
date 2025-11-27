@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate , login , logout
 from django.contrib.auth.models import User
 # Create your views here.
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required , user_passes_test
 def home(request):
     return render(request,"home.html")
 
@@ -143,3 +143,35 @@ def ChangePassword(request):
             return redirect("change_pass")
             
     return render(request,"change_pass.html")
+
+
+def AdminLoginView(request):
+    if request.method == 'POST':
+        username = request.POST.get("user_name")
+        password = request.POST.get("password")
+        user = authenticate(request,username=username,password=password)
+        if not user:
+            messages.error(request,"Invalid Login Credentials")
+            return redirect("admin_login")
+        if not user.is_staff:
+            messages.error(request,"You are not authorized to login here ")
+            return redirect("admin_login")
+        
+        login(request,user)
+        messages.success(request,f"Welcome {username}")
+        return redirect("admin_dashboard")
+    return render(request,"admin_login.html")
+
+def is_staff(user):
+    return user.is_authenticated and user.is_staff
+
+@user_passes_test(is_staff,login_url="admin_login")
+def AdminDashBoard(request):
+    total_users = User.objects.filter(is_staff = False).count()
+    total_predictions = Prediction.objects.count()
+    return render(request,"admin_dashboard.html",locals())
+
+def AdminLogout(request):
+    logout(request)
+    messages.success(request,"Admin Sucessfully logout")
+    return redirect("admin_login")

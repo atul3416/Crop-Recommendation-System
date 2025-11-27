@@ -71,7 +71,7 @@
                             Password</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#"><i
+                        <a class="nav-link active" aria-current="page" href="{% url 'admin_logout' %}"><i
                                 class="fa-solid fa-right-from-bracket"></i> Logout</a>
                     </li>
 
@@ -92,7 +92,7 @@
                             Signup</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#"><i class="fa-solid fa-lock"></i>
+                        <a class="nav-link active" aria-current="page" href="{% url 'admin_login' %}"><i class="fa-solid fa-lock"></i>
                             Admin</a>
                     </li>
                     {% endif %}

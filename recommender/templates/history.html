@@ -1,9 +1,10 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="text-center mx-4">
-   
-        <h3> <i class="fa-solid fa-clock-rotate-left"></i> Prediction History</h3>
+<div class="text-center mx-4 ">
+
+    <h3> <i class="fa-solid mb-2 mt-1 fa-clock-rotate-left"></i> Prediction History</h3>
+    <div class="table-responsive">
         <table class="table table-success  table-hover">
             <thead>
                 <tr class="table-active">
@@ -34,13 +35,14 @@
                     <td>{{p.rainfall}}</td>
                     <td><span class="badge bg-success">{{p.predicted_label|title}}</span></td>
                     <td><a href="{% url 'user_delete_pred' p.id %}" class="btn btn-outline-danger"
-                            onclick="return confirm('Delete this entry? This cannot be undone')"><i class="fa-solid fa-trash"></i></a>
+                            onclick="return confirm('Delete this entry? This cannot be undone')"><i
+                                class="fa-solid fa-trash"></i></a>
                     </td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
-    
+    </div>
 
 </div>
 {% endblock %}
