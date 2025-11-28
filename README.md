@@ -16,7 +16,7 @@ A trained Machine Learning model is used to predict the best crop, and the resul
 - Trained on the standard Crop Recommendation Dataset
 - Algorithms tested: Random Forest, Decision Tree, SVM, Logistic Regression
 - Random Forest achieved the best accuracy and is used for predictions
-- The trained model is saved as model.pkl and integrated into Django
+- The trained model is saved as Crop_Recommendtion_RF.pkl and integrated into Django
 
 ## Tech Stack
 | Header 1 | Header 2 |
