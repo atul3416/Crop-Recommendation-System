@@ -5,6 +5,7 @@
 
 {% block content %}
 <h3 class="mb-3"><i class="fa-solid fa-gauge"></i> Dashboard </h3>
+
 <div class="row g-4  m-2">
     <div class="col-md-6">
         <div class="card shadow-sm border-0">
@@ -21,7 +22,7 @@
                 <div>
                     <i class="fa-solid fa-users text-success fa-2xl"></i>
                 </div>
-               
+
 
 
             </div>
@@ -44,7 +45,7 @@
                 <div>
                     <i class="fa-solid fa-seedling text-success fa-2xl"></i>
                 </div>
-               
+
 
 
             </div>
@@ -53,5 +54,86 @@
     </div>
 
 </div>
+
+<div class="row g-4  m-2">
+    <div class="col-md-6">
+        <div class="card shadow-sm border-0">
+            <div class="card-body" style="height: 350px">
+               <h5 class="mb-3"><i class="fa-solid fa-chart-column"></i>Top Crops</h5>
+               <canvas id="cropBar"></canvas>
+            </div>
+
+        </div>
+    </div>
+
+     <div class="col-md-6">
+        <div class="card shadow-sm border-0">
+            <div class="card-body" style="height: 350px">
+               <h5 class="mb-3"><i class="fa-solid fa-chart-line"></i>Predictions(7 days)</h5>
+               <canvas id="dailyLine"></canvas>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.min.js"></script>
+
+<script>
+    const cropLabels = {{ crop_labels|safe }};
+    const labelCounts = {{ label_count|safe }};
+    const dateLabels = {{ date_labels|safe }};
+    const dateCounts = {{ date_count|safe }};
+
+    function makeOrReplaceChart(canvasId, config) {
+        const canvas = document.getElementById(canvasId);
+        if (!canvas) return null;
+
+        const existing = Chart.getChart(canvas);
+        if (existing) existing.destroy();
+
+        return new Chart(canvas, config);
+    }
+
+    // Crop Bar Chart
+    makeOrReplaceChart('cropBar', {
+        type: 'bar',
+        data: {
+            labels: cropLabels,
+            datasets: [{
+                label: 'Count',
+                data: labelCounts,
+                backgroundColor: '#4e79a7'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false
+        }
+    });
+
+    // Daily Line Chart (7 days)
+    makeOrReplaceChart('dailyLine', {
+        type: 'line',
+        data: {
+            labels: dateLabels,
+            datasets: [{
+                label: 'Predictions (past 7 days)',
+                data: dateCounts,
+                borderWidth: 2,
+                fill: true,
+                tension: 0.3
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            
+        }
+    });
+</script>
+
+</script>
 
 {% endblock %}

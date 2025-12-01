@@ -16,5 +16,7 @@ urlpatterns = [
     path('change_pass/',ChangePassword,name="change_pass"),
     path('admin_login/',AdminLoginView,name="admin_login"),
     path('admin_dashboard/',AdminDashBoard,name="admin_dashboard"),
-    path('admin_logout/',AdminLogout,name="admin_logout")
+    path('admin_logout/',AdminLogout,name="admin_logout"),
+    path('user_list/',AdminUserList,name="user_list"),
+    path('user_delete/<int:id>/',AdminUserDelete,name="user_delete")
 ]

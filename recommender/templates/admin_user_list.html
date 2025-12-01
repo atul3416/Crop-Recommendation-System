@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block title %} Manage Users {% endblock %}
+{% block content %}
+<div class="text-center mx-4 ">
+
+    <h3> <i class="fa-solid fa-users"></i> Registered Users's List</h3>
+    <div class="table-responsive">
+        <table class="table table-success  table-hover">
+            <thead>
+                <tr class="table-active">
+                    <th scope="col">SrNo.</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Contact</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for u in total_users %}
+                <tr>
+                    <th>{{forloop.counter}}</th>
+                    <td>{{u.get_full_name}}</td>
+                    <td>{{u.username}}</td>
+                    <td>{{u.UserProfile.phone}}</td>
+
+                    <td><a href="{% url 'user_delete' u.id %}" class="btn btn-outline-danger"
+                            onclick="return confirm('Are you Sure ?')"><i
+                                class="fa-solid fa-trash"></i></a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</div>
+{% endblock %}

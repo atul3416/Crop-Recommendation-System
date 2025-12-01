@@ -165,13 +165,52 @@ def AdminLoginView(request):
 def is_staff(user):
     return user.is_authenticated and user.is_staff
 
+
+from django.db.models import Count
+from django.utils import timezone
+import json
+from datetime import timedelta
 @user_passes_test(is_staff,login_url="admin_login")
 def AdminDashBoard(request):
     total_users = User.objects.filter(is_staff = False).count()
     total_predictions = Prediction.objects.count()
-    return render(request,"admin_dashboard.html",locals())
+
+    crop_qs = (
+        Prediction.objects.values('predicted_label').annotate(c = Count('id')).order_by('-c')[:10]
+    )
+    crop_labels = [r['predicted_label'].title() for r in crop_qs]
+    label_count = [r['c'] for r in crop_qs]
+
+    today = timezone.localdate()  
+    dates = [today - timedelta(days = t) for t in range(6,-1,-1)] #6,5,4,3,2,1,0
+
+    date_labels = [d.strftime("%d %b") for d in dates] #26 11 2025 - > 26 Nov
+    date_counts = [Prediction.objects.filter(created_at__date = d ).count() for d in dates]
+
+    context = {
+        "total_users" : total_users,
+        "total_predictions" : total_predictions,
+        "crop_labels": json.dumps(crop_labels),
+        "label_count" : json.dumps(label_count),
+        "date_labels" : json.dumps(date_labels),
+        "date_count" : json.dumps(date_counts),
+    }
+    
+    return render(request,"admin_dashboard.html",context)
 
 def AdminLogout(request):
     logout(request)
     messages.success(request,"Admin Sucessfully logout")
     return redirect("admin_login")
+
+@user_passes_test(is_staff,login_url="admin_login")
+def AdminUserList(request):
+    total_users = User.objects.filter(is_staff = False)
+    return render(request,"admin_user_list.html",locals())
+
+@user_passes_test(is_staff,login_url="admin_login")
+def AdminUserDelete(request,id):
+    u = get_object_or_404(User,id = id)
+    u.delete()
+    messages.success(request,"User Deleted Successfully")
+    return redirect('user_list')

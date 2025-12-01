@@ -55,7 +55,7 @@
 
                     {% elif user.is_authenticated and user.is_staff %}
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#"><i class="fa-solid fa-gauge"></i>
+                        <a class="nav-link active" aria-current="page" href="{% url 'admin_dashboard' %}"><i class="fa-solid fa-gauge"></i>
                             Dashboard</a>
                     </li>
                     <li class="nav-item">
@@ -63,7 +63,7 @@
                             Predictions</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#"><i class="fa-solid fa-users"></i>
+                        <a class="nav-link active" aria-current="page" href="{% url 'user_list' %}"><i class="fa-solid fa-users"></i>
                             Register Users</a>
                     </li>
                     <li class="nav-item">
