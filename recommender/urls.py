@@ -18,5 +18,7 @@ urlpatterns = [
     path('admin_dashboard/',AdminDashBoard,name="admin_dashboard"),
     path('admin_logout/',AdminLogout,name="admin_logout"),
     path('user_list/',AdminUserList,name="user_list"),
-    path('user_delete/<int:id>/',AdminUserDelete,name="user_delete")
+    path('user_delete/<int:id>/',AdminUserDelete,name="user_delete"),
+    path('admin_pred_list/',AdminUserPrediction, name="admin_pred_list"),
+    path('admin_pred_delete/<int:id>/',AdminPredictionDelete,name="admin_delete_pred"),
 ]

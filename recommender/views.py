@@ -214,3 +214,42 @@ def AdminUserDelete(request,id):
     u.delete()
     messages.success(request,"User Deleted Successfully")
     return redirect('user_list')
+
+from django.utils.dateparse import parse_date
+@user_passes_test(is_staff,login_url="admin_login")
+def AdminUserPrediction(request):
+    qs = Prediction.objects.order_by('predicted_label').select_related('user')
+
+    crop = request.GET.get('crop')
+    start_date = request.GET.get('start')
+    end_date = request.GET.get('end')
+
+    if crop:
+        qs = qs.filter(predicted_label__iexact=crop)
+    
+    s_date = parse_date(start_date) if start_date else None
+    e_date = parse_date(end_date) if end_date else None
+
+    if s_date:
+        qs = qs.filter(create_at__date__gte = s_date)
+
+    if e_date:
+        qs =qs.filter(create_at__date__lte = e_date)
+
+    crops = (Prediction.objects.order_by('predicted_label').values_list('predicted_label',flat=True).distinct())
+    context = {
+        "qs" : qs,
+        "crops" :crops,
+        "current_crop" : crop,
+        "start" : start_date,
+        "end" : end_date
+    }
+    return render(request,"user_predictions.html",context)
+
+
+@user_passes_test(is_staff,login_url="admin_login")
+def AdminPredictionDelete(request,id):
+    p = get_object_or_404(Prediction,id = id)
+    p.delete()
+    messages.success(request,"Prediction Deleted Successfully")
+    return redirect('admin_pred_list')
