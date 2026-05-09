@@ -1,1 +1,0 @@
-web: gunicorn crop_site.wsgi
